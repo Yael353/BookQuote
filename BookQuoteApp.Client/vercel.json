@@ -1,12 +1,5 @@
 {
-  "framework": "angular",
   "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/BookQuoteApp.Client/browser",
-  "installCommand": "npm install",
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "framework": "angular"
 }
