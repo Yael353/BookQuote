@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -8,20 +9,30 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class Navbar {
+export class Navbar implements OnInit, OnDestroy {
   isLoggedIn = false;
   isDarkMode = false;
+  private authSubscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.isLoggedIn = this.authService.isLoggedIn();
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.authSubscription = this.authService.getLoggedInStatus().subscribe(status => {
+      this.isLoggedIn = status;
+    });
+
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';
     this.applyDarkMode();
   }
 
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
   logout(): void {
     this.authService.logout();
-    this.isLoggedIn = false;
-    this.router.navigate(['/login']);
   }
 
   toggleDarkMode(): void {
