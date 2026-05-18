@@ -1,6 +1,6 @@
 {
   "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/book-quote-app.client/browser",
+  "outputDirectory": "dist/BookQuoteApp.Client/browser",
   "framework": "angular",
   "routes": [
     {
