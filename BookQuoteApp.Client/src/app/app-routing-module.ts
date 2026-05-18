@@ -4,8 +4,10 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Books } from './components/books/books';
 import { Quotes } from './components/quotes/quotes';
+import { Home } from './components/home/home';
 
 const routes: Routes = [
+  { path: '', component: Home },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'books', component: Books },

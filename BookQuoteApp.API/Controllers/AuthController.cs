@@ -12,7 +12,7 @@ namespace BookQuoteApp.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
@@ -40,7 +40,7 @@ namespace BookQuoteApp.API.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Ok("Användaren har registrerats");
+            return Ok(new { message = "Användaren har registrerats" });
         }
 
         [HttpPost("login")]

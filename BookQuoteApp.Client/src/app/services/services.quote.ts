@@ -14,7 +14,7 @@ export interface Quote {
   providedIn: 'root'
 })
 export class QuoteService {
-  private apiUrl = 'http://localhost:5041/api/Quotes';
+  private apiUrl = 'http://localhost:5184/api/Quotes';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

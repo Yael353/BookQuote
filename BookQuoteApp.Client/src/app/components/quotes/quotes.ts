@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { QuoteService, Quote } from '../../services/services.quote';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,6 +13,7 @@ export class Quotes implements OnInit {
   quotes: Quote[] = [];
   showForm = false;
   editingQuote: Quote | null = null;
+  loading = true;
   quoteModel = {
     text: '',
     author: ''
@@ -19,32 +21,32 @@ export class Quotes implements OnInit {
 
   constructor(
     private quoteService: QuoteService,
-    public authService: AuthService
+    public authService: AuthService,
+    private cdr: ChangeDetectorRef  
   ) { }
 
   ngOnInit(): void {
     this.loadQuotes();
   }
 
-  loadQuotes(): void {
+  async loadQuotes(): Promise<void> {
     if (!this.authService.isLoggedIn()) {
-      console.log('Inte inloggad, väntar...');
-      // Försök igen om 500ms
       setTimeout(() => this.loadQuotes(), 500);
       return;
     }
 
-    console.log('Laddar citat...');
-    this.quoteService.getQuotes().subscribe({
-      next: (data) => {
-        console.log('Citat mottagna:', data);
-        this.quotes = data;
-      },
-      error: (err) => {
-        console.error('Fel vid laddning:', err);
-        alert('Kunde inte ladda citat');
-      }
-    });
+    this.loading = true;
+
+    try {
+      const data = await firstValueFrom(this.quoteService.getQuotes());
+      this.quotes = data || [];
+    } catch (err) {
+      console.error('Fel vid laddning:', err);
+      alert('Kunde inte ladda citat');
+    } finally {
+      this.loading = false;
+      this.cdr.detectChanges(); 
+    }
   }
 
   refresh(): void {

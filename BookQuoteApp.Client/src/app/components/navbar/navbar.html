@@ -1,19 +1,24 @@
 <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" data-bs-theme="dark">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/books">
+    <a class="navbar-brand fw-bold" routerLink="/">
       <i class="fas fa-book-open me-2"></i>BookQuoteApp
     </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item me-2">
           <a class="nav-link" routerLink="/books" routerLinkActive="active">Böcker</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item ms-2">
           <a class="nav-link" routerLink="/quotes" routerLinkActive="active">Citat</a>
         </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item" *ngIf="!isLoggedIn">
           <a class="nav-link" routerLink="/login" routerLinkActive="active">Logga in</a>
         </li>
@@ -26,7 +31,7 @@
           </button>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <button class="btn btn-outline-light rounded-pill ms-2" (click)="logout()">
+          <button class="btn btn-outline-light rounded-pill" (click)="logout()">
             <i class="fas fa-sign-out-alt me-1"></i>Logga ut
           </button>
         </li>

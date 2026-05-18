@@ -1,0 +1,91 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+      <div class="mb-5">
+        <div class="display-1 mb-3">
+          <i class="fas fa-book-open" style="color: #667eea;"></i>
+          <i class="fas fa-quote-right ms-2" style="color: #764ba2;"></i>
+        </div>
+        <h1 class="display-3 fw-bold mb-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          Välkommen till BookQuoteApp
+        </h1>
+        <p class="lead text-muted mb-4">
+          Din personliga samlingsplats för böcker och citat.
+          Samla dina favoritböcker och inspirerande citat på ett ställe!
+        </p>
+      </div>
+
+      <div class="row justify-content-center g-4 mb-5">
+        <div class="col-md-5 col-lg-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-book fa-3x mb-3" style="color: #667eea;"></i>
+              <h5 class="card-title fw-bold">Dina Böcker</h5>
+              <p class="card-text text-muted">
+                Lägg till, redigera och organisera din bokhylla.
+                Alla dina böcker på ett ställe!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-lg-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-quote-left fa-3x mb-3" style="color: #764ba2;"></i>
+              <h5 class="card-title fw-bold">Inspirerande Citat</h5>
+              <p class="card-text text-muted">
+                Samla dina favoritcitat, få 5 förvalda direkt
+                och lägg till egna.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4" *ngIf="!authService.isLoggedIn()">
+        <div class="card bg-light border-0">
+          <div class="card-body">
+            <h3 class="fw-bold mb-3">Redo att börja?</h3>
+            <p class="mb-4">
+              Logga in eller skapa ett konto för att börja samla dina böcker och citat!
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+              <button class="btn btn-primary btn-lg rounded-pill" routerLink="/login">
+                <i class="fas fa-sign-in-alt me-2"></i>Logga in
+              </button>
+              <button class="btn btn-outline-secondary btn-lg rounded-pill" routerLink="/register">
+                <i class="fas fa-user-plus me-2"></i>Registrera
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4" *ngIf="authService.isLoggedIn()">
+        <div class="card bg-success bg-opacity-10 border-0">
+          <div class="card-body">
+            <h3 class="fw-bold mb-3">👋 Välkommen tillbaka!</h3>
+            <p class="mb-4">
+              Du är inloggad. Gå till dina böcker eller citat för att fortsätta!
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+              <button class="btn btn-primary btn-lg rounded-pill" routerLink="/books">
+                <i class="fas fa-book me-2"></i>Mina Böcker
+              </button>
+              <button class="btn btn-outline-primary btn-lg rounded-pill" routerLink="/quotes">
+                <i class="fas fa-quote-left me-2"></i>Mina Citat
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-3">
+        <p class="text-muted small">
+          <i class="fas fa-heart" style="color: #667eea;"></i>
+          BookQuoteApp – Din litterära följeslagare
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

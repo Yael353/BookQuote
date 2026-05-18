@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { BookService, Book } from '../../services/book.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,6 +13,7 @@ export class Books implements OnInit {
   books: Book[] = [];
   showForm = false;
   editingBook: Book | null = null;
+  loading = true;  
   bookModel = {
     title: '',
     author: '',
@@ -20,30 +22,35 @@ export class Books implements OnInit {
 
   constructor(
     private bookService: BookService,
-    public authService: AuthService  
+    public authService: AuthService,
+    private cdr: ChangeDetectorRef 
   ) { }
 
   ngOnInit(): void {
     this.loadBooks();
   }
 
-  loadBooks(): void {
+  async loadBooks(): Promise<void> {
     if (!this.authService.isLoggedIn()) {
       setTimeout(() => this.loadBooks(), 500);
       return;
     }
 
-    this.bookService.getBooks().subscribe({
-      next: (data) => {
-        this.books = data;
-      },
-      error: () => {
-        alert('Kunde inte ladda böcker');
-      }
-    });
+    this.loading = true;
+
+    try {
+      const data = await firstValueFrom(this.bookService.getBooks());
+      this.books = data || [];
+    } catch (err) {
+      console.error('Fel vid laddning:', err);
+      alert('Kunde inte ladda böcker');
+    } finally {
+      this.loading = false;
+      this.cdr.detectChanges();
+    }
   }
 
-  refresh(): void { 
+  refresh(): void {
     this.loadBooks();
   }
 
