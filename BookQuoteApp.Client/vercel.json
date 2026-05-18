@@ -1,0 +1,5 @@
+{
+  "buildCommand": "ng build --configuration production",
+  "outputDirectory": "dist/BookQuoteApp.Client/browser",
+  "framework": "angular"
+}
