@@ -1,0 +1,86 @@
+body[data-bs-theme="dark"] .p-3.border-bottom {
+  background-color: #1e1e1e !important;
+  border-bottom-color: #444 !important;
+}
+
+body[data-bs-theme="dark"] .bg-light {
+  background-color: #1e1e1e !important;
+}
+
+body[data-bs-theme="dark"] .card.border-0.shadow-sm {
+  background-color: #2d2d2d !important;
+}
+
+body[data-bs-theme="dark"] .form-control {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #fff;
+}
+
+  body[data-bs-theme="dark"] .form-control:focus {
+    background-color: #3d3d3d;
+    color: #fff;
+    border-color: #667eea;
+  }
+
+body[data-bs-theme="dark"] .btn-light {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #fff;
+}
+
+  body[data-bs-theme="dark"] .btn-light:hover {
+    background-color: #4d4d4d;
+    color: #fff;
+  }
+
+body[data-bs-theme="dark"] .alert-info {
+  background-color: #1e3a5f;
+  border-color: #0d6efd;
+  color: #e0e0e0;
+}
+
+body[data-bs-theme="dark"] .text-muted {
+  color: #aaa !important;
+}
+
+body[data-bs-theme="dark"] .table {
+  color: #e0e0e0;
+}
+
+body[data-bs-theme="dark"] .table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.2);
+}
+
+body[data-bs-theme="dark"] .table td,
+body[data-bs-theme="dark"] .table th {
+  border-top-color: #444;
+}
+
+body[data-bs-theme="dark"] .bg-white {
+  background-color: #2d2d2d !important;
+}
+
+
+
+html, body {
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 50px;
+}
+
+.container {
+  margin-bottom: 50px;
+}
+
+app-root {
+  display: block;
+  min-height: 100vh;
+}

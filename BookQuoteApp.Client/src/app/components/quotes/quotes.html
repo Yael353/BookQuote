@@ -1,0 +1,80 @@
+<div class="card shadow-lg border-0">
+  <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="mb-0 fw-bold">
+        <i class="fas fa-quote-left me-2"></i>Mina Citat
+      </h3>
+      <div>
+        <button class="btn btn-sm btn-outline-light me-2 rounded-circle" (click)="refresh()" title="Uppdatera">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+        <button class="btn btn-light rounded-pill" (click)="showAddForm()">
+          <i class="fas fa-plus me-1"></i> Lägg till citat
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+
+    <div class="p-3 border-bottom" *ngIf="showForm" style="background: #f8f9fa;">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <h4 class="mb-0">{{ editingQuote ? 'Redigera citat' : 'Nytt citat' }}</h4>
+        </div>
+        <div class="card-body">
+          <form #quoteForm="ngForm" (ngSubmit)="saveQuote()">
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">Citat</label>
+                <textarea class="form-control" rows="2" [(ngModel)]="quoteModel.text" name="text" required placeholder="Skriv ditt citat här..."></textarea>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Författare (valfritt)</label>
+                <input type="text" class="form-control" [(ngModel)]="quoteModel.author" name="author" placeholder="Författare">
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-secondary rounded-pill me-2" (click)="cancelForm()">
+                <i class="fas fa-times me-1"></i>Avbryt
+              </button>
+              <button type="submit" class="btn btn-success rounded-pill" [disabled]="!quoteForm.valid">
+                <i class="fas fa-save me-1"></i>Spara
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="quotes.length === 0" class="text-center p-5">
+      <i class="fas fa-quote-left fa-4x mb-3" style="color: #667eea;"></i>
+      <p class="mb-0">Du har inga citat än. Klicka på "Lägg till citat" för att komma igång!</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="quotes.length > 0">
+      <table class="table table-hover mb-0">
+        <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <tr>
+            <th class="text-white py-3">Citat</th>
+            <th class="text-white py-3">Författare</th>
+            <th class="text-white py-3 text-center" style="width: 120px;">Åtgärder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let quote of quotes">
+            <td class="align-middle fst-italic">"{{ quote.text }}"</td>
+            <td class="align-middle">{{ quote.author || 'Okänd' }}</td>
+            <td class="align-middle text-center">
+              <button class="btn btn-sm btn-warning rounded-pill me-2" (click)="editQuote(quote)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger rounded-pill" (click)="deleteQuote(quote.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+
+.btn-rounded {
+  border-radius: 50px;
+}
+
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}

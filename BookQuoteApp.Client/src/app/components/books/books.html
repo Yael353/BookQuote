@@ -1,0 +1,88 @@
+<div class="card shadow-lg border-0">
+  <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="mb-0 fw-bold">
+        <i class="fas fa-book-open me-2"></i>Mina Böcker
+      </h3>
+      <div>
+        <button class="btn btn-sm btn-outline-light me-2 rounded-circle" (click)="refresh()" title="Uppdatera">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+        <button class="btn btn-light rounded-pill" (click)="showAddForm()">
+          <i class="fas fa-plus me-1"></i> Lägg till bok
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+
+ 
+    <div class="p-3 border-bottom" *ngIf="showForm" style="background: #f8f9fa;">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <h4 class="mb-0">{{ editingBook ? 'Redigera bok' : 'Ny bok' }}</h4>
+        </div>
+        <div class="card-body">
+          <form #bookForm="ngForm" (ngSubmit)="saveBook()">
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Titel</label>
+                <input type="text" class="form-control" [(ngModel)]="bookModel.title" name="title" required placeholder="Titel">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Författare</label>
+                <input type="text" class="form-control" [(ngModel)]="bookModel.author" name="author" required placeholder="Författare">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Publiceringsdatum</label>
+                <input type="date" class="form-control" [(ngModel)]="bookModel.publishDate" name="publishDate" required>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-secondary rounded-pill me-2" (click)="cancelForm()">
+                <i class="fas fa-times me-1"></i>Avbryt
+              </button>
+              <button type="submit" class="btn btn-success rounded-pill" [disabled]="!bookForm.valid">
+                <i class="fas fa-save me-1"></i>Spara
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    
+    <div *ngIf="books.length === 0" class="text-center p-5">
+      <i class="fas fa-book fa-4x mb-3" style="color: #667eea;"></i>
+      <p class="mb-0">Du har inga böcker än. Klicka på "Lägg till bok" för att komma igång!</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="books.length > 0">
+      <table class="table table-hover mb-0">
+        <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <tr>
+            <th class="text-white py-3">Titel</th>
+            <th class="text-white py-3">Författare</th>
+            <th class="text-white py-3">Publicerad</th>
+            <th class="text-white py-3 text-center">Åtgärder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books">
+            <td class="align-middle fw-bold">{{ book.title }}</td>
+            <td class="align-middle">{{ book.author }}</td>
+            <td class="align-middle">{{ book.publishDate | date:'yyyy-MM-dd' }}</td>
+            <td class="align-middle text-center">
+              <button class="btn btn-sm btn-warning rounded-pill me-2" (click)="editBook(book)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger rounded-pill" (click)="deleteBook(book.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
