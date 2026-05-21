@@ -14,6 +14,9 @@ yarn-error.log
 **/obj/
 **/bookquoteapp.db
 **/appsettings.Development.json
+*.db
+*.db-shm
+*.db-wal
 
 
 .vs/
