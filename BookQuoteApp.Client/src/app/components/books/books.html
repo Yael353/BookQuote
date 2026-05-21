@@ -16,7 +16,6 @@
   </div>
   <div class="card-body p-0">
 
-    <!-- Add/Edit Form -->
     <div class="p-3 border-bottom" *ngIf="showForm" style="background: #f8f9fa;">
       <div class="card border-0 shadow-sm">
         <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
@@ -51,7 +50,6 @@
       </div>
     </div>
 
-    <!-- inte inloggad </-->
     <div *ngIf="notLoggedIn" class="text-center p-5">
       <i class="fas fa-lock fa-4x mb-3" style="color: #667eea;"></i>
       <h4>Du är inte inloggad</h4>
@@ -64,22 +62,19 @@
       </button>
     </div>
 
-    <!-- Loading Spinner -->
-    <div *ngIf="loading" class="text-center p-5">
+    <div *ngIf="!notLoggedIn && loading" class="text-center p-5">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Laddar...</span>
       </div>
       <p class="mt-2">Laddar böcker...</p>
     </div>
 
-    <!-- No books message -->
-    <div *ngIf="!loading && books.length === 0" class="text-center p-5">
+    <div *ngIf="!notLoggedIn && !loading && books.length === 0" class="text-center p-5">
       <i class="fas fa-book fa-4x mb-3" style="color: #667eea;"></i>
       <p class="mb-0">Du har inga böcker än. Klicka på "Lägg till bok" för att komma igång!</p>
     </div>
 
-    <!-- Books table -->
-    <div class="table-responsive" *ngIf="!loading && books.length > 0">
+    <div class="table-responsive" *ngIf="!notLoggedIn && !loading && books.length > 0">
       <table class="table table-hover mb-0">
         <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
           <tr>
