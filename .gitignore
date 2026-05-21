@@ -1,4 +1,4 @@
-
+# Angular
 /dist
 /tmp
 /out-tsc
@@ -9,16 +9,17 @@ yarn-error.log
 /.angular/cache
 .sass-cache/
 
-
+# .NET
 **/bin/
 **/obj/
-**/bookquoteapp.db
 **/appsettings.Development.json
+
+# SQLite database files
 *.db
 *.db-shm
 *.db-wal
 
-
+# Visual Studio / VS Code
 .vs/
 .vscode/*
 !.vscode/settings.json
@@ -29,11 +30,11 @@ yarn-error.log
 *.userosscache
 *.sln.docstates
 
-
+# OS files
 .DS_Store
 Thumbs.db
 *.tmp
 
-
+# Build outputs
 **/dist/
 **/wwwroot/
