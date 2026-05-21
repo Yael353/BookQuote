@@ -13,7 +13,8 @@ export class Books implements OnInit {
   books: Book[] = [];
   showForm = false;
   editingBook: Book | null = null;
-  loading = true;  
+  loading = false;
+  notLoggedIn = false; 
   bookModel = {
     title: '',
     author: '',
@@ -23,19 +24,24 @@ export class Books implements OnInit {
   constructor(
     private bookService: BookService,
     public authService: AuthService,
-    private cdr: ChangeDetectorRef 
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.checkAuthAndLoad();
+  }
+
+  checkAuthAndLoad(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.notLoggedIn = true;
+      this.loading = false;
+      return;
+    }
+    this.notLoggedIn = false;
     this.loadBooks();
   }
 
   async loadBooks(): Promise<void> {
-    if (!this.authService.isLoggedIn()) {
-      setTimeout(() => this.loadBooks(), 500);
-      return;
-    }
-
     this.loading = true;
 
     try {
@@ -51,16 +57,28 @@ export class Books implements OnInit {
   }
 
   refresh(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.notLoggedIn = true;
+      return;
+    }
     this.loadBooks();
   }
 
   showAddForm(): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att lägga till böcker');
+      return;
+    }
     this.showForm = true;
     this.editingBook = null;
     this.bookModel = { title: '', author: '', publishDate: '' };
   }
 
   editBook(book: Book): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att redigera böcker');
+      return;
+    }
     this.showForm = true;
     this.editingBook = book;
     this.bookModel = {
@@ -93,6 +111,10 @@ export class Books implements OnInit {
   }
 
   deleteBook(id: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att radera böcker');
+      return;
+    }
     if (confirm('Är du säker på att du vill radera den här boken?')) {
       this.bookService.deleteBook(id).subscribe({
         next: () => {

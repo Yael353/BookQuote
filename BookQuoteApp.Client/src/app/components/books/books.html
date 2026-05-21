@@ -51,6 +51,19 @@
       </div>
     </div>
 
+    <!-- inte inloggad </-->
+    <div *ngIf="notLoggedIn" class="text-center p-5">
+      <i class="fas fa-lock fa-4x mb-3" style="color: #667eea;"></i>
+      <h4>Du är inte inloggad</h4>
+      <p class="mb-3">Logga in för att se och spara dina böcker.</p>
+      <button class="btn btn-primary rounded-pill" routerLink="/login">
+        <i class="fas fa-sign-in-alt me-2"></i>Logga in
+      </button>
+      <button class="btn btn-outline-secondary rounded-pill ms-2" routerLink="/register">
+        <i class="fas fa-user-plus me-2"></i>Registrera
+      </button>
+    </div>
+
     <!-- Loading Spinner -->
     <div *ngIf="loading" class="text-center p-5">
       <div class="spinner-border text-primary" role="status">

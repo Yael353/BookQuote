@@ -13,7 +13,8 @@ export class Quotes implements OnInit {
   quotes: Quote[] = [];
   showForm = false;
   editingQuote: Quote | null = null;
-  loading = true;
+  loading = false;
+  notLoggedIn = false;  
   quoteModel = {
     text: '',
     author: ''
@@ -22,19 +23,24 @@ export class Quotes implements OnInit {
   constructor(
     private quoteService: QuoteService,
     public authService: AuthService,
-    private cdr: ChangeDetectorRef  
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.checkAuthAndLoad();
+  }
+
+  checkAuthAndLoad(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.notLoggedIn = true;
+      this.loading = false;
+      return;
+    }
+    this.notLoggedIn = false;
     this.loadQuotes();
   }
 
   async loadQuotes(): Promise<void> {
-    if (!this.authService.isLoggedIn()) {
-      setTimeout(() => this.loadQuotes(), 500);
-      return;
-    }
-
     this.loading = true;
 
     try {
@@ -45,21 +51,33 @@ export class Quotes implements OnInit {
       alert('Kunde inte ladda citat');
     } finally {
       this.loading = false;
-      this.cdr.detectChanges(); 
+      this.cdr.detectChanges();
     }
   }
 
   refresh(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.notLoggedIn = true;
+      return;
+    }
     this.loadQuotes();
   }
 
   showAddForm(): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att lägga till citat');
+      return;
+    }
     this.showForm = true;
     this.editingQuote = null;
     this.quoteModel = { text: '', author: '' };
   }
 
   editQuote(quote: Quote): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att redigera citat');
+      return;
+    }
     this.showForm = true;
     this.editingQuote = quote;
     this.quoteModel = {
@@ -91,6 +109,10 @@ export class Quotes implements OnInit {
   }
 
   deleteQuote(id: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Du måste vara inloggad för att radera citat');
+      return;
+    }
     if (confirm('Är du säker på att du vill radera detta citat?')) {
       this.quoteService.deleteQuote(id).subscribe({
         next: () => {
