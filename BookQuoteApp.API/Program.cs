@@ -11,7 +11,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 var dbPath = Path.Combine(Path.GetTempPath(), "bookquoteapp.db");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite($"Data Source={dbPath}"));
@@ -34,27 +33,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
+    options.AddPolicy("AllowVercelFrontend",
         policy =>
         {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
+            policy.WithOrigins("https://book-quote.vercel.app", "http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
 
 var app = builder.Build();
 
+app.UseCors("AllowVercelFrontend");
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 app.Run($"http://0.0.0.0:{port}");
