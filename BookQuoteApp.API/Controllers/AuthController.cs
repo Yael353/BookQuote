@@ -87,6 +87,12 @@ namespace BookQuoteApp.API.Controllers
         {
             return Ok("pong");
         }
+
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Auth controller works!");
+        }
     }
 
     
