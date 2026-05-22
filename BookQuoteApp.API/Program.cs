@@ -2,7 +2,6 @@ using BookQuoteApp.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +10,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var dbPath = "/tmp/bookquoteapp.db";
+var dbPath = "/var/data/bookquoteapp.db";
+var dbDir = Path.GetDirectoryName(dbPath);
+if (!Directory.Exists(dbDir))
+{
+    Directory.CreateDirectory(dbDir);
+}
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite($"Data Source={dbPath}"));
+
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+}
 
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "minSuperHemligaNyckelSomÄrMinst32TeckenLång!2025";
 var key = Encoding.UTF8.GetBytes(jwtKey);
@@ -35,7 +45,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
+    options.AddPolicy("AllowVercelFrontend",
         policy =>
         {
             policy.WithOrigins("https://book-quote-seven.vercel.app")
@@ -46,7 +56,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowVercelFrontend");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
