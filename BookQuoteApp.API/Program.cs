@@ -38,7 +38,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowVercelFrontend",
         policy =>
         {
-            policy.WithOrigins("https://book-quote.vercel.app", "http://localhost:4200")
+            policy.WithOrigins("https://book-quote-seven.vercel.app", "http://localhost:4200")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
