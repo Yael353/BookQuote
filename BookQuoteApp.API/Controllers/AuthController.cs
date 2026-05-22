@@ -82,6 +82,11 @@ namespace BookQuoteApp.API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("pong");
+        }
     }
 
     
