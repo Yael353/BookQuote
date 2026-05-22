@@ -14,7 +14,7 @@ export interface Quote {
   providedIn: 'root'
 })
 export class QuoteService {
-  private apiUrl = 'http://localhost:5184/api/Quotes';
+  private apiUrl = 'https://bookquoteapp-api.onrender.com/api/Auth';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

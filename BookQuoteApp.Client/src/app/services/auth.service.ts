@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5184/api/Auth';
+  private apiUrl = 'https://bookquoteapp-api.onrender.com/api/Auth';
   private tokenKey = 'jwt_token';
   private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
